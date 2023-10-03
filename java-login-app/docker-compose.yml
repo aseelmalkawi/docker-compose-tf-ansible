@@ -1,0 +1,39 @@
+version: "3.3"
+services:
+  tomcat:
+    container_name: tomcat-spring
+    build: 
+      context: .
+      dockerfile: Dockerfile-tomcat
+    ports:
+      - "8080:8080"
+    volumes:
+      - tomcatusers:/opt/tomcat/conf
+      - tomcatcontext:/opt/tomcat/webapps/manager/META-INF
+    depends_on:
+      - mysqldb
+
+  mysqldb:
+    container_name: db
+    build: 
+      context: .
+      dockerfile: Dockerfile-db
+    stdin_open: false
+    tty: false 
+    ports:
+      - "3307:3306"
+  
+  # nginx:
+  #   container_name: nginx
+  #   build: 
+  #     context: .
+  #     dockerfile: Dockerfile-nginx
+  #   stdin_open: false
+  #   tty: false 
+  #   ports:
+  #     - "80:80"
+  #   depends_on:
+  #     - tomcat
+volumes:
+  tomcatusers:
+  tomcatcontext:

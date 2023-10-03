@@ -1,0 +1,18 @@
+# Use the official Nginx image as the base image
+FROM nginx
+
+# Install telnet
+RUN apt-get update && apt-get install -y telnet && apt-get clean
+
+WORKDIR /etc/nginx/conf.d
+
+RUN rm default.conf
+
+# Copy your custom nginx.conf file with proxy_pass rule
+COPY nginx.conf .
+
+# Expose port 80 for Nginx
+EXPOSE 80
+
+# Start Nginx on container runtime
+CMD ["nginx", "-g", "daemon off;"]

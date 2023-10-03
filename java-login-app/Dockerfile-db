@@ -1,0 +1,20 @@
+# Use the official MySQL image as the base image
+FROM docker.io/mysql:8.0
+
+# Set the environment variables
+ENV MYSQL_ROOT_PASSWORD=root
+ENV MYSQL_DATABASE=UserDB
+ENV MYSQL_USER=admin
+ENV MYSQL_PASSWORD=Admin123
+
+# Optionally, you can expose the MySQL port (3306) if needed
+EXPOSE 3306
+
+# You can also add any additional configuration or initialization scripts here, if needed
+# COPY ./custom-config-file.cnf /etc/mysql/conf.d/
+
+# Copy your SQL script into the container
+COPY db.sql /docker-entrypoint-initdb.d/
+
+# Specify any post-startup commands or scripts to run, if required
+# CMD ["/path/to/custom-startup-script.sh"]
