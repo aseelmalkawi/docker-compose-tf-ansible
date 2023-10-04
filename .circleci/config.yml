@@ -1,0 +1,53 @@
+version: 2.1
+executors:
+  docker-executor:
+    docker:
+      - image: aseelibrahimm/docker-terraform-awscli-ansible-ssh:v1
+jobs:
+  clone-git-code:
+    executor: docker-executor
+    steps:
+      - checkout                
+      - run:
+          name: "Plan terraform"
+          working_directory: terraform
+          command: |
+            terraform init
+            terraform plan --var-file=devops.tfvars
+            
+  apply-terraform:
+    executor: docker-executor
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.14
+          docker_layer_caching: true
+      - run:
+          name: "apply terraform if approved"
+          working_directory: terraform
+          command: |
+            terraform init
+            terraform apply --var-file=devops.tfvars -auto-approve
+            
+      - run:
+          name: "Run ansible file to ec2"
+          working_directory: ansible
+          command: |
+            ansible-playbook -i inventory playbook.yml
+      
+workflows:
+  version: 2
+  build:
+    jobs:
+      - clone-git-code
+      - hold-to-apply:
+          type: approval
+          requires:
+            - clone-git-code
+      - apply-terraform:
+          requires:
+            - hold-to-apply
+      - hold-to-destroy:
+          type: approval
+          requires:
+            - apply-terraform
