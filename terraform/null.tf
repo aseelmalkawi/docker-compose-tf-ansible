@@ -12,7 +12,7 @@ resource "null_resource" "runtime" {
   provisioner "local-exec" {
     command = <<EOF
       chmod +x ../ansible/config.sh && chmod +x aseelkey.pem
-      sh ../ansible/config.sh ${aws_instance.tf-ec2.public_ip}
+      sh ../ansible/config.sh ${aws_instance.aseel-ec2.public_ip}
     EOF
   }
 }
