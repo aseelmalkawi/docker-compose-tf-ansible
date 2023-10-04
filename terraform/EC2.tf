@@ -1,6 +1,6 @@
 
 #Create public ec2
-resource "aws_instance" "tf-ec2" {
+resource "aws_instance" "aseel-ec2" {
     
     ami                     = var.ami
     instance_type           = "t2.micro"
