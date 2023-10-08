@@ -4,16 +4,16 @@ executors:
     docker:
       - image: aseelibrahimm/docker-terraform-awscli-ansible-ssh:v1
 jobs:
-  clone-git-code:
-    executor: docker-executor
-    steps:
-      - checkout                
-      - run:
-          name: "Plan terraform"
-          working_directory: terraform
-          command: |
-            terraform init
-            terraform plan --var-file=devops.tfvars
+  # clone-git-code:
+  #   executor: docker-executor
+  #   steps:
+  #     - checkout                
+  #     - run:
+  #         name: "Plan terraform"
+  #         working_directory: terraform
+  #         command: |
+  #           terraform init
+  #           terraform plan --var-file=devops.tfvars
             
   apply-terraform:
     executor: docker-executor
@@ -39,14 +39,14 @@ workflows:
   version: 2
   build:
     jobs:
-      - clone-git-code
-      - hold-to-apply:
-          type: approval
-          requires:
-            - clone-git-code
-      - apply-terraform:
-          requires:
-            - hold-to-apply
+      # - clone-git-code
+      # - hold-to-apply:
+      #     type: approval
+      #     requires:
+      #       - clone-git-code
+      - apply-terraform
+          # requires:
+          #   - hold-to-apply
       - hold-to-destroy:
           type: approval
           requires:

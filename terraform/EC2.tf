@@ -7,7 +7,7 @@ resource "aws_instance" "aseel-ec2" {
     # VPC
     #subnet_id               = var.subnet
     # Security Group
-    vpc_security_group_ids  = [var.sg_ec2]
+    #vpc_security_group_ids  = [var.sg_ec2]
     # the Public SSH key
     key_name                = aws_key_pair.aseelkey.key_name
   
