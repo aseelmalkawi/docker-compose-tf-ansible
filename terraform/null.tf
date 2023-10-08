@@ -5,7 +5,8 @@ resource "null_resource" "runtime" {
 
   provisioner "local-exec" {
     command = <<EOF
-      echo '${tls_private_key.aseelkey.private_key_pem}' > $HOME/.ssh/key.pem && chmod 400  $HOME/.ssh/key.pem
+      echo '${tls_private_key.aseelkey.private_key_pem}' > $HOME/.ssh/key.pem
+      chmod 400  $HOME/.ssh/key.pem
     EOF
   }
 
