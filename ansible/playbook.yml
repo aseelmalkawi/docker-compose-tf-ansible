@@ -30,4 +30,4 @@
         
     - name: turn on docker compose
       ansible.builtin.command: 
-        cmd: cd ../java-login-app && docker compose up -d
+        cmd: cd /java-login-app && docker compose up -d
