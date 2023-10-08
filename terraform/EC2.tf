@@ -5,7 +5,7 @@ resource "aws_instance" "aseel-ec2" {
     ami                     = var.ami
     instance_type           = "t2.micro"
     # VPC
-    subnet_id               = var.subnet
+    #subnet_id               = var.subnet
     # Security Group
     vpc_security_group_ids  = [var.sg_ec2]
     # the Public SSH key
